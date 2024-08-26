@@ -25,10 +25,11 @@
             color: rgb(255, 187, 0);
             font-family: 'JuneGull', sans-serif;
             position: relative;
-            -webkit-user-select: none; /* Отключает выделение текста на iOS и Safari */
-            -moz-user-select: none;    /* Отключает выделение текста в Firefox */
-            -ms-user-select: none;     /* Отключает выделение текста в Internet Explorer/Edge */
-            user-select: none;         /* Отключает выделение текста в большинстве браузеров */
+            -webkit-user-select: none; /* Для Safari */
+            -moz-user-select: none;    /* Для Firefox */
+            -ms-user-select: none;     /* Для Internet Explorer/Edge */
+            user-select: none;         /* Для большинства браузеров */
+            -webkit-touch-callout: none; /* Отключает меню при долгом нажатии */
         }
 
         #durov {
@@ -41,9 +42,8 @@
             position: relative;
             z-index: 1;
             user-select: none; /* Убирает выделение */
-            outline: none; /* Убирает обводку при фокусе */
-            -webkit-touch-callout: none; /* Убирает меню при длительном нажатии на iOS */
-            -webkit-user-drag: none; /* Убирает возможность перетаскивания на iOS */
+            -webkit-user-drag: none; /* Отключает перетаскивание в Safari */
+            pointer-events: auto; /* Обеспечивает реакции на события (клики и т.п.) */
         }
 
         #durov:active {
@@ -170,13 +170,14 @@
     <div id="backgroundSection"></div> <!-- Новый раздел для заднего фона -->
     
     <script>
+        // Отключаем контекстное меню
         document.addEventListener('contextmenu', function(e) {
-            e.preventDefault(); // Отключение контекстного меню
+            e.preventDefault(); // Запрещаем появление контекстного меню
         });
 
-        // Делаем так, чтобы изображение не выделялось при удерживании
+        // Запрещаем перетаскивание изображения
         document.getElementById("durov").addEventListener("dragstart", function(e) {
-            e.preventDefault(); // Отключаем перетаскивание изображения
+            e.preventDefault(); 
         });
 
         let clickCount = Number(localStorage.getItem('clickCount')) || 0; 
@@ -205,66 +206,4 @@
             const x = event.clientX - rect.left; 
             const y = event.clientY - rect.top; 
 
-            baget.style.left = x + 'px'; 
-            baget.style.top = y + 'px'; 
-            document.body.appendChild(baget);
-
-            setTimeout(function() {
-                baget.style.display = 'block'; 
-            }, 0);
-
-            setTimeout(function() {
-                document.body.removeChild(baget);
-            }, 1500);
-        });
-
-        function updateProgressBar() {
-            const progressPercentage = Math.min((clickCount * 1000) / 1000 * 100, 100); 
-            progressBar.style.width = progressPercentage + '%';
-        }
-
-        function resetProgressBar() {
-            clickCount = 0; 
-            clickCounterDisplay.textContent = clickCount; 
-            progressBar.style.width = '0%'; 
-            localStorage.removeItem('clickCount'); // Удаляем данные из хранилища
-        }
-
-        function showResHotka() {
-            const reshotka = document.createElement('img');
-            reshotka.src = 'reshotka.png'; 
-            reshotka.alt = 'Reshotka';
-            reshotka.className = 'resHotka'; 
-            reshotka.style.display = 'block'; 
-
-            document.body.appendChild(reshotka);
-        }
-
-        const prfButton = document.querySelector(".control-button:last-child");
-        prfButton.addEventListener('click', function() {
-            console.log("Кнопка ПРФ нажата.");
-            clickCounterDisplay.style.display = 'none';
-            durov.style.display = 'none';
-            document.getElementById('progressContainer').style.display = 'none';
-            showResHotka();
-            backgroundSection.style.display = 'block';
-        });
-    </script>
-
-    <div class="control-panel">
-        <button class="control-button">
-            <img src="сука.svg" alt="Icon 1">
-            <div class="control-button-text">Будет позже</div>
-        </button>
-        <button class="control-button">
-            <img src="icon2.png" alt="Icon 2">
-            <div class="control-button-text">Париз</div>
-        </button>
-        <button class="control-button">
-            <img src="icon3.png" alt="Icon 3">
-            <div class="control-button-text">Будет позже</div>
-        </button>
-    </div>
-
-</body>
-</html>
+            baget.style
