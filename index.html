@@ -173,7 +173,12 @@
         document.addEventListener('contextmenu', function(e) {
             e.preventDefault(); // Отключение контекстного меню
         });
-        
+
+        // Делаем так, чтобы изображение не выделялось при удерживании
+        document.getElementById("durov").addEventListener("dragstart", function(e) {
+            e.preventDefault(); // Отключаем перетаскивание изображения
+        });
+
         let clickCount = Number(localStorage.getItem('clickCount')) || 0; 
         const clickCounterDisplay = document.getElementById('clickCount');
         const progressBar = document.getElementById('progressBar');
